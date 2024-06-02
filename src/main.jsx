@@ -27,7 +27,12 @@ let obj = {
     name: 1,
     age: 2
 }
-let proxyObj = observable(obj)
+let obj2 = {
+    home: {
+        name: "beijing"
+    }
+}
+let proxyObj = observable(obj2)
 console.log(proxyObj)
 
 
