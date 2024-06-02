@@ -1,27 +1,42 @@
-/*
-makeObservable:
-    可以捕获 已经存在的对象属性 并且使他们可观察，任何的js对象（包括类的实例）
+// function logger(target) {
+//     console.log(target)
+// }
+// @logger
+// class Person {
+//     constructor() {
+//         this.value = "333"
+//     }
+// }
+// import {
+//     observable, autorun
+// } from "mobx"
+//
+// let obj = {
+//     name: 1
+// }
+// let proxyObj = observable(obj)
+// console.log(proxyObj)
+//
+// // autorun 负责创建一个响应器 其实就是观察者 负责观察对应的值
+// autorun(() => {
+//     console.log(proxyObj.name)
+// })
 
-    都可以作为 target 被传递给这个函数，一般情况下 makeObservable 是在类的构造函数之中使用，并且他的第一个参数是this
-
- */
-import {autorun, makeObservable, observable} from "mobx";
-
-class Doubler {
-    value
-    constructor(value) {
-        makeObservable(this, {
-            value: observable
-        })
-        this.value = value
-    }
+import { observable } from "./mobx"
+let obj = {
+    name: 1,
+    age: 2
 }
+let proxyObj = observable(obj)
+console.log(proxyObj)
 
-let doubler = new Doubler(333)
-autorun(() => {
-    console.log(doubler.value)
-})
-doubler.value = '33'
+
+
+
+
+
+
+
 
 
 

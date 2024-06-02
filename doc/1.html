@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <script type="text/javascript">
+    let obj = {
+      name: 1
+    }
+    let proxyObj = new Proxy(obj, {
+      get(target, key) {
+        // target[key] = value //
+        return Reflect.get(target, key)
+      },
+      set(target, key, value) {
+        return Reflect.set(target, key, value)
+      }
+    })
+    console.log(proxyObj.name)
+    const properties = {
+        name: 1,
+        age: 3
+    }
+    const descriptors = Object.getOwnPropertyDescriptors(properties)
+    console.log(descriptors, 45)
+
+
+
+
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
