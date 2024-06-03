@@ -22,30 +22,37 @@
 //     console.log(proxyObj.name)
 // })
 
-import { observable } from "./mobx"
-let obj = {
-    name: 1,
-    age: 2
-}
-let obj2 = {
-    home: {
-        name: "beijing"
-    }
-}
-let proxyObj = observable(obj2)
-console.log(proxyObj)
+// import {autorun, observable} from "./mobx"
+// let obj = {
+//     name: 1,
+//     age: 2
+// }
+// let obj2 = {
+//     home: {
+//         name: "beijing"
+//     }
+// }
+// let proxyObj = observable(obj)
+//
+// autorun(() => {
+//     console.log(proxyObj.name)
+// })
+// setTimeout(() => {
+//     proxyObj.name = "9999"
+// }, 1000)
 
 
 
+import { createRoot } from "react-dom/client"
+import Counter from "./Counter.jsx"
 
 
+const root = createRoot(document.getElementById("root"))
 
 
-
-
-
-
-
+root.render(
+    <Counter></Counter>
+)
 
 
 

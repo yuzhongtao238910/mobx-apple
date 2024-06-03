@@ -22,6 +22,10 @@ export function getAdm(target) {
     return target[$mobx]
 }
 
+export const globalState = {
+    pendingReactions: [],
+    trackingDerivation: null
+}
 
 
 

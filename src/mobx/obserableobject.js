@@ -2,16 +2,31 @@
 target -> obserableObjectAdministartion 可观察对象的管理器
 
  */
-import { getNextId, addHiddenProp, $mobx, getAdm} from "./utils.js"
+import {getNextId, addHiddenProp, $mobx, getAdm, globalState} from "./utils.js"
 class ObservableValue {
     constructor(value) {
         this.value = value
+        this.observers = new Set() // 此可以观察值的监听者 观察者
     }
     get() {
+        reportObserved(this)
         return this.value
     }
     setNewValue(newValue) {
         this.value = newValue
+        propagateChanged(this) // 广播
+    }
+}
+function propagateChanged(observableValue) {
+    const {observers} = observableValue
+    observers.forEach(observer => {
+        observer.runReaction()
+    })
+}
+function reportObserved(observableValue) {
+    const trackingDerivation = globalState.trackingDerivation
+    if (trackingDerivation) {
+        trackingDerivation.observing.push(observableValue)
     }
 }
 class ObservableObjectAdministration {
@@ -24,7 +39,11 @@ class ObservableObjectAdministration {
         return this.target[key]
     }
     set(key, value) {
-        this.target[key] = value
+        // debugger
+        if (this.values.has(key)) {
+            return this.setObservablePropValue(key, value)
+        }
+        // this.target[key] = value
     }
     extend(key, descriptor) {
         this.defineObservableProperty(key, descriptor.value) // 1
@@ -50,6 +69,7 @@ class ObservableObjectAdministration {
     setObservablePropValue(key, value) {
         const observable = this.values.get(key)
         observable.setNewValue(value)
+        return true
     }
 }
 function asObservableObject(target) {
